@@ -1,0 +1,102 @@
+ion-content {
+  --background: var(--ion-color-light); // Um fundo mais claro para contrastar com os cards
+}
+
+.product-card {
+  margin-bottom: 20px;
+  border-radius: 8px;
+  overflow: hidden; // Garante que a imagem respeite o border-radius
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Sombra suave
+  background-color: var(--ion-color-white); // Cor de fundo do card
+  display: flex;
+  flex-direction: column;
+  height: 100%; // Garante que todos os cards na linha tenham a mesma altura, se necessário
+}
+
+.product-image {
+  width: 100%;
+  height: 200px; // Altura fixa para as imagens
+  object-fit: cover; // Corta a imagem para preencher o espaço, mantendo a proporção
+  border-bottom: 1px solid var(--ion-color-light); // Separador visual
+}
+
+ion-card-header {
+  padding-bottom: 0;
+}
+
+ion-card-title {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: var(--ion-color-dark);
+  margin-bottom: 5px;
+}
+
+ion-card-subtitle {
+  font-size: 0.9em;
+  color: var(--ion-color-medium);
+  margin-top: 0;
+}
+
+ion-card-content {
+  flex-grow: 1; // Permite que o conteúdo do card ocupe o espaço restante
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.price-info {
+  margin-bottom: 10px;
+}
+
+.product-price {
+  font-size: 1.4em;
+  font-weight: bold;
+  color: var(--ion-color-primary); // Ou uma cor de destaque
+  display: block;
+  margin-bottom: 5px;
+}
+
+.installments-info {
+  font-size: 0.85em;
+  color: var(--ion-color-dark);
+  margin: 0;
+}
+
+.product-options {
+  margin-top: 10px;
+  ion-chip {
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-size: 0.8em;
+  }
+}
+
+ion-footer ion-toolbar {
+  --background: var(--ion-color-light); // Fundo do footer do card
+  padding: 0 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05); // Linha separadora
+}
+
+ion-footer ion-button {
+  font-size: 0.9em;
+  --padding-start: 10px;
+  --padding-end: 10px;
+  ion-icon {
+    margin-right: 5px;
+  }
+}
+
+// Estilos para a mensagem de lista vazia
+.ion-text-center {
+  text-align: center;
+}
+
+.ion-margin-top {
+  margin-top: 20px;
+}
+
+.ion-text-danger {
+  color: var(--ion-color-danger);
+}

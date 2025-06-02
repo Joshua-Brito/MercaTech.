@@ -1,0 +1,62 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Cadastro de Produtos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Cadastro de Produtos</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+    <form [formGroup]="form" (ngSubmit)="enviar()">
+      <ion-list>
+        <ion-item>
+          <ion-input label="Título" labelPlacement="stacked" formControlName="title"></ion-input>
+          <ion-note slot="end" color="danger" *ngIf="form.get('title')?.touched && form.get('title')?.errors?.['required']">
+            Título é obrigatório.
+          </ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-textarea label="Descrição" labelPlacement="stacked" formControlName="description"></ion-textarea>
+          <ion-note slot="end" color="danger" *ngIf="form.get('description')?.touched && form.get('description')?.errors?.['required']">
+            Descrição é obrigatória.
+          </ion-note>
+          <ion-note slot="end" color="danger" *ngIf="form.get('description')?.touched && form.get('description')?.errors?.['minlength']">
+            Mínimo de 10 caracteres.
+          </ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-input label="Preço" labelPlacement="stacked" type="number" formControlName="price"></ion-input>
+          <ion-note slot="end" color="danger" *ngIf="form.get('price')?.touched && form.get('price')?.errors?.['required']">
+            Preço é obrigatório.
+          </ion-note>
+          <ion-note slot="end" color="danger" *ngIf="form.get('price')?.touched && form.get('price')?.errors?.['min']">
+            Preço deve ser maior que zero.
+          </ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-input label="Categoria" labelPlacement="stacked" formControlName="category"></ion-input>
+          <ion-note slot="end" color="danger" *ngIf="form.get('category')?.touched && form.get('category')?.errors?.['required']">
+            Categoria é obrigatória.
+          </ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-input label="URL da Imagem" labelPlacement="stacked" formControlName="image"></ion-input>
+          </ion-item>
+
+        <ion-button expand="block" type="submit" [disabled]="!form.valid">Cadastrar Produto</ion-button>
+      </ion-list>
+    </form>
+  </div>
+</ion-content>
