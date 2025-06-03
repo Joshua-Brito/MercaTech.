@@ -1,102 +1,79 @@
-ion-content {
-  --background: var(--ion-color-light); // Um fundo mais claro para contrastar com os cards
+ion-row {
+  justify-content: center;
 }
 
-.product-card {
-  margin-bottom: 20px;
-  border-radius: 8px;
-  overflow: hidden; // Garante que a imagem respeite o border-radius
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Sombra suave
-  background-color: var(--ion-color-white); // Cor de fundo do card
+ion-segment {
+  margin: 16px 0 8px 0;
+  width: 100%;
+  --background: var(--ion-background-color);
+}
+
+.produto-card {
+  width: 220px;
+  margin: 16px auto;
   display: flex;
   flex-direction: column;
-  height: 100%; // Garante que todos os cards na linha tenham a mesma altura, se necessário
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  transition: box-shadow 0.2s;
+  min-height: 370px;
+  background: var(--ion-card-background);
 }
 
-.product-image {
-  width: 100%;
-  height: 200px; // Altura fixa para as imagens
-  object-fit: cover; // Corta a imagem para preencher o espaço, mantendo a proporção
-  border-bottom: 1px solid var(--ion-color-light); // Separador visual
+.produto-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.13);
 }
 
-ion-card-header {
-  padding-bottom: 0;
+.imagem-placeholder {
+  width: 90%;
+  height: 100px;
+  background: #e0e0e0;
+  border-radius: 8px;
+  margin: 18px 0 10px 0;
 }
 
 ion-card-title {
-  font-size: 1.1em;
-  font-weight: bold;
-  color: var(--ion-color-dark);
-  margin-bottom: 5px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 4px;
 }
 
-ion-card-subtitle {
-  font-size: 0.9em;
-  color: var(--ion-color-medium);
-  margin-top: 0;
-}
-
-ion-card-content {
-  flex-grow: 1; // Permite que o conteúdo do card ocupe o espaço restante
+.avaliacao {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+  font-size: 1.1rem;
 }
 
-.price-info {
+.avaliacao-numero {
+  margin-left: 6px;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.descricao {
+  font-size: 0.95rem;
+  color: var(--ion-text-color);
   margin-bottom: 10px;
+  text-align: center;
+  min-height: 40px;
 }
 
-.product-price {
-  font-size: 1.4em;
-  font-weight: bold;
-  color: var(--ion-color-primary); // Ou uma cor de destaque
-  display: block;
-  margin-bottom: 5px;
-}
-
-.installments-info {
-  font-size: 0.85em;
-  color: var(--ion-color-dark);
-  margin: 0;
-}
-
-.product-options {
-  margin-top: 10px;
-  ion-chip {
-    margin-right: 5px;
-    margin-bottom: 5px;
-    font-size: 0.8em;
-  }
-}
-
-ion-footer ion-toolbar {
-  --background: var(--ion-color-light); // Fundo do footer do card
-  padding: 0 10px;
-  border-top: 1px solid rgba(0, 0, 0, 0.05); // Linha separadora
-}
-
-ion-footer ion-button {
-  font-size: 0.9em;
-  --padding-start: 10px;
-  --padding-end: 10px;
-  ion-icon {
-    margin-right: 5px;
-  }
-}
-
-// Estilos para a mensagem de lista vazia
-.ion-text-center {
+.frete {
+  color: #007600;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 6px;
   text-align: center;
 }
 
-.ion-margin-top {
-  margin-top: 20px;
-}
-
-.ion-text-danger {
-  color: var(--ion-color-danger);
+.preco {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #b12704;
+  margin-bottom: 10px;
+  text-align: center;
 }

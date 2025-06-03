@@ -1,148 +1,52 @@
-// src/app/detalhes/detalhes.page.ts
-import { Component, OnInit } from '@angular/core';
-import { Product } from '../interfaces/product';
-import { ItemService } from '../services/item.service';
-import { ActionSheetController, AlertController, NavController, ToastController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-detalhes',
   templateUrl: './detalhes.page.html',
   styleUrls: ['./detalhes.page.scss'],
-  standalone:false,
+  standalone: false
 })
-export class DetalhesPage implements OnInit {
-  products: Product[] = [];
-  loading: boolean = false;
-  error: boolean = false;
+export class DetalhesPage {
+  categorias = [
+    'Todos',
+    'Microfone',
+    'Mouse',
+    'Monitor',
+    'Mousepad',
+    'Teclado',
+    'Headset',
+    'Gabinete',
+    'Kit'
+  ];
+  categoriaSelecionada = 'Todos';
 
-  constructor(
-    private itemService: ItemService,
-    private actionSheetController: ActionSheetController,
-    private alertController: AlertController,
-    private navController: NavController,
-    private router: Router,
-    private toastController: ToastController
-  ) {}
+  produtos = [
+    { nome: 'Microfone Condensador', categoria: 'Microfone', descricao: 'Microfone profissional para gravação e streaming.', preco: 299, estrelas: 5, freteGratis: true },
+    { nome: 'Mouse Gamer RGB', categoria: 'Mouse', descricao: 'Mouse com iluminação RGB e alta precisão.', preco: 159, estrelas: 4, freteGratis: false },
+    { nome: 'Monitor 27" Full HD', categoria: 'Monitor', descricao: 'Monitor IPS com 75Hz e bordas finas.', preco: 1299, estrelas: 5, freteGratis: true },
+    { nome: 'Mousepad XL', categoria: 'Mousepad', descricao: 'Mousepad grande para setups gamers.', preco: 79, estrelas: 4, freteGratis: true },
+    { nome: 'Teclado Mecânico RGB', categoria: 'Teclado', descricao: 'Teclado com switches azuis e iluminação.', preco: 349, estrelas: 5, freteGratis: true },
+    { nome: 'Headset Surround 7.1', categoria: 'Headset', descricao: 'Headset com som surround e microfone removível.', preco: 249, estrelas: 4, freteGratis: false },
+    { nome: 'Gabinete Gamer Mid Tower', categoria: 'Gabinete', descricao: 'Gabinete com lateral em vidro temperado.', preco: 499, estrelas: 5, freteGratis: true },
+    { nome: 'Kit Upgrade Gamer', categoria: 'Kit', descricao: 'Placa-mãe, processador e memória RAM.', preco: 1899, estrelas: 5, freteGratis: true },
+    { nome: 'Microfone USB', categoria: 'Microfone', descricao: 'Microfone plug and play para podcasts.', preco: 199, estrelas: 4, freteGratis: true },
+    { nome: 'Mouse Sem Fio', categoria: 'Mouse', descricao: 'Mouse ergonômico com bateria recarregável.', preco: 99, estrelas: 4, freteGratis: false },
+    { nome: 'Monitor 24" Curvo', categoria: 'Monitor', descricao: 'Monitor curvo com 144Hz para jogos.', preco: 1199, estrelas: 5, freteGratis: true },
+    { nome: 'Mousepad Gamer RGB', categoria: 'Mousepad', descricao: 'Mousepad com iluminação LED personalizável.', preco: 129, estrelas: 5, freteGratis: true },
+    { nome: 'Teclado Sem Fio', categoria: 'Teclado', descricao: 'Teclado compacto e silencioso.', preco: 179, estrelas: 4, freteGratis: false },
+    { nome: 'Headset Bluetooth', categoria: 'Headset', descricao: 'Headset sem fio com bateria de longa duração.', preco: 299, estrelas: 4, freteGratis: true },
+    { nome: 'Gabinete Mini ITX', categoria: 'Gabinete', descricao: 'Gabinete compacto para PCs pequenos.', preco: 399, estrelas: 4, freteGratis: false },
+    { nome: 'Kit Peças RGB', categoria: 'Kit', descricao: 'Coolers, fitas LED e acessórios RGB.', preco: 149, estrelas: 5, freteGratis: true },
+    { nome: 'Microfone de Lapela', categoria: 'Microfone', descricao: 'Ideal para entrevistas e vídeos.', preco: 59, estrelas: 4, freteGratis: true },
+    { nome: 'Mouse Vertical', categoria: 'Mouse', descricao: 'Design ergonômico para conforto prolongado.', preco: 139, estrelas: 4, freteGratis: false },
+    { nome: 'Monitor 32" 4K', categoria: 'Monitor', descricao: 'Alta resolução para produtividade e jogos.', preco: 2499, estrelas: 5, freteGratis: true },
+    { nome: 'Headset com Cancelamento', categoria: 'Headset', descricao: 'Redução de ruído ativa para imersão total.', preco: 399, estrelas: 5, freteGratis: true }
+  ];
 
-  ngOnInit() {
-    this.carregarProdutos();
-    this.itemService.getItems().subscribe(items => {
-      this.products = items;
-      this.loading = false;
-      console.log('Produtos carregados:', this.products);
-      if (this.products.length === 0) {
-        console.warn('Nenhum item cadastrado ainda. A lista está vazia.');
-      }
-    }, (err: any) => {
-      console.error('Erro ao carregar produtos do serviço:', err);
-      this.error = true;
-      this.loading = false;
-    });
-  }
-
-  carregarProdutos() {
-    this.loading = true;
-    this.error = false;
-  }
-
-  async presentActionSheet(productId: string) {
-    const product = this.itemService.getItemById(productId);
-    if (!product) {
-      this.presentToast('Produto não encontrado para ações.', 'danger');
-      return;
+  get produtosFiltrados() {
+    if (this.categoriaSelecionada === 'Todos') {
+      return this.produtos;
     }
-
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Opções do Produto',
-      buttons: [
-        {
-          text: 'Editar',
-          icon: 'create-outline',
-          handler: () => {
-            this.editarProduto(productId);
-          }
-        },
-        {
-          text: product.isFeatured ? 'Remover do Destaque' : 'Marcar como Destaque',
-          icon: product.isFeatured ? 'star-outline' : 'star',
-          handler: () => {
-            this.toggleDestaque(productId, !product.isFeatured);
-          }
-        },
-        {
-          text: 'Excluir',
-          icon: 'trash-outline',
-          role: 'destructive',
-          handler: () => {
-            this.confirmarExclusao(productId);
-          }
-        },
-        {
-          text: 'Cancelar',
-          icon: 'close',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancelar clicado');
-          }
-        }
-      ]
-    });
-    await actionSheet.present();
-  }
-
-  async confirmarExclusao(id: string) {
-    const alert = await this.alertController.create({
-      header: 'Confirmar Exclusão',
-      message: 'Tem certeza de que deseja excluir este produto?',
-      buttons: [
-        {
-          text: 'Não',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Exclusão cancelada');
-          }
-        },
-        {
-          text: 'Sim',
-          handler: () => {
-            this.excluirProduto(id);
-          }
-        }
-      ]
-    });
-    await alert.present();
-  }
-
-  excluirProduto(id: string) {
-    this.itemService.deleteItem(id);
-    this.presentToast('Produto excluído com sucesso!', 'success');
-  }
-
-  editarProduto(id: string) {
-    this.navController.navigateForward(`/tabs/cadastro/${id}`);
-  }
-
-  toggleDestaque(id: string, isFeatured: boolean) {
-    const product = this.itemService.getItemById(id);
-    if (product) {
-      const updatedProduct: Product = { ...product, isFeatured: isFeatured };
-      this.itemService.updateItem(updatedProduct);
-      const message = isFeatured ? 'Produto marcado como destaque!' : 'Produto removido do destaque!';
-      this.presentToast(message, 'success');
-    } else {
-      this.presentToast('Não foi possível atualizar o destaque. Produto não encontrado.', 'danger');
-    }
-  }
-
-  async presentToast(message: string, color: string) {
-    const toast = await this.toastController.create({
-      message: message,
-      duration: 2000,
-      color: color,
-      position: 'top'
-    });
-    toast.present();
+    return this.produtos.filter(p => p.categoria === this.categoriaSelecionada);
   }
 }
