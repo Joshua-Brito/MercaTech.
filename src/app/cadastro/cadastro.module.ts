@@ -1,12 +1,13 @@
+// src/app/cadastro/cadastro.module.ts
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { CadastroPageRoutingModule } from './cadastro-routing.module';
-import { CadastroPage } from './cadastro.page';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // **CERTIFIQUE-SE QUE ReactiveFormsModule ESTÁ AQUI**
 
-// Importe o SharedModule aqui
-import { SharedModule } from '../shared.module'; // Verifique o caminho!
+import { IonicModule } from '@ionic/angular';
+
+import { CadastroPageRoutingModule } from './cadastro-routing.module';
+
+import { CadastroPage } from './cadastro.page';
 
 @NgModule({
   imports: [
@@ -14,9 +15,7 @@ import { SharedModule } from '../shared.module'; // Verifique o caminho!
     FormsModule,
     IonicModule,
     CadastroPageRoutingModule,
-    ReactiveFormsModule,
-    // Remova AppModule daqui, se tiver sido adicionado!
-    SharedModule // <<--- IMPORTE O SharedModule aqui!
+    ReactiveFormsModule // <-- ESTE MÓDULO É CRUCIAL PARA FORMULÁRIOS REATIVOS
   ],
   declarations: [CadastroPage]
 })

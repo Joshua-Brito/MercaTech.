@@ -1,58 +1,96 @@
+// src/app/cadastro/cadastro.page.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastController } from '@ionic/angular';
-// O caminho para ItemService aqui é: saia de 'cadastro' (..) e entre em 'services'
-import { ItemService } from '../services/item.service'; // <<--- CAMINHO CORRETO AQUI
-// O caminho para Product aqui é: saia de 'cadastro' (..) e entre em 'interfaces'
-import { Product } from '../interfaces/product'; // <<--- CAMINHO CORRETO AQUI
+import { ItemService } from '../services/item.service';
+import { Product } from '../interfaces/product';
+import { NavController, ToastController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.page.html',
   styleUrls: ['./cadastro.page.scss'],
-  standalone: false,
+  standalone:false,
 })
 export class CadastroPage implements OnInit {
-  form: FormGroup;
+  productForm!: FormGroup;
+  productId: string | null = null;
+  isEditing: boolean = false;
 
   constructor(
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
+    private itemService: ItemService,
+    private navController: NavController,
     private toastController: ToastController,
-    private itemService: ItemService
-  ) {
-    this.form = this.fb.group({
-      title: ['', Validators.required],
-      description: ['', [Validators.required, Validators.minLength(10)]],
-      price: [null, [Validators.required, Validators.min(0.01)]],
-      category: ['', Validators.required],
-      image: ['https://via.placeholder.com/150']
+    private activatedRoute: ActivatedRoute
+  ) {}
+
+  ngOnInit() {
+    this.initForm(); // Inicializa o formulário
+
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.productId = params.get('id');
+      if (this.productId) {
+        this.isEditing = true;
+        this.loadProductForEdit(this.productId);
+      } else {
+        this.isEditing = false;
+        this.productForm.reset();
+        this.productForm.patchValue({ isFeatured: false }); // Garante valor inicial para o toggle
+      }
     });
   }
 
-  ngOnInit() {}
+  initForm() {
+    this.productForm = this.formBuilder.group({
+      id: [null],
+      title: ['', Validators.required],
+      description: ['', Validators.required],
+      price: [null, [Validators.required, Validators.min(0.01)]],
+      category: ['', Validators.required],
+      image: ['', Validators.required],
+      isFeatured: [false]
+    });
+  }
 
-  async enviar() {
-    if (this.form.valid) {
-      const novoItem: Product = this.form.value;
-      this.itemService.addItem(novoItem);
-
-      const toast = await this.toastController.create({
-        message: 'Item cadastrado com sucesso e adicionado à lista em memória!',
-        duration: 2000,
-        color: 'success',
-        position: 'bottom'
-      });
-      toast.present();
-      console.log('Item cadastrado:', novoItem);
-      this.form.reset({ image: 'https://via.placeholder.com/150' });
+  loadProductForEdit(id: string) {
+    const product = this.itemService.getItemById(id);
+    if (product) {
+      this.productForm.patchValue(product);
     } else {
-      const toast = await this.toastController.create({
-        message: 'Preencha todos os campos corretamente!',
-        duration: 3000,
-        color: 'danger',
-        position: 'bottom'
-      });
-      toast.present();
+      this.presentToast('Produto não encontrado para edição.', 'danger');
+      this.navController.navigateBack('/tabs/detalhes');
     }
+  }
+
+  async onSubmit() {
+    if (this.productForm.valid) {
+      const product: Product = this.productForm.value;
+
+      if (this.isEditing && product.id) {
+        this.itemService.updateItem(product);
+        await this.presentToast('Produto atualizado com sucesso!', 'success');
+      } else {
+        this.itemService.addItem(product);
+        await this.presentToast('Produto cadastrado com sucesso!', 'success');
+      }
+
+      this.productForm.reset();
+      this.isEditing = false; // Após cadastrar/atualizar, reseta para modo de novo cadastro
+      this.navController.navigateBack('/tabs/detalhes');
+    } else {
+      await this.presentToast('Por favor, preencha todos os campos obrigatórios e válidos.', 'warning');
+      this.productForm.markAllAsTouched();
+    }
+  }
+
+  async presentToast(message: string, color: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: color,
+      position: 'top'
+    });
+    toast.present();
   }
 }

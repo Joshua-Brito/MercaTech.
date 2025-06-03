@@ -1,16 +1,55 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Página Inicial</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Mercatech</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <h1>Bem-vindo ao nosso app!</h1>
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Mercatech</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-  <ion-button expand="block" [routerLink]="['/detalhes']">
-    Ir para a Página de Detalhes
-  </ion-button>
+  <div id="container">
+    <ion-text>
+      <h1 class="ion-text-center">Bem-vindo(a) à Mercatech!</h1>
+      <p class="ion-text-center">Sua loja online favorita para os melhores produtos.</p>
+    </ion-text>
 
-  <ion-button expand="block" [routerLink]="['/cadastro']" class="ion-margin-top"> Ir para Cadastro
-  </ion-button>
+    <ion-grid class="ion-padding-vertical">
+      <ion-row>
+        <ion-col size="12">
+          <h2 class="ion-text-center ion-margin-bottom">Nossos Produtos em Destaque</h2>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let produtoDestaque of featuredProducts">
+          <ion-card>
+            <img [src]="produtoDestaque.image || 'https://via.placeholder.com/400x300?text=Sem+Imagem'" alt="Imagem do Produto">
+            <ion-card-header>
+              <ion-card-title>{{ produtoDestaque.title }}</ion-card-title>
+              <ion-card-subtitle>{{ produtoDestaque.category }}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <p>{{ produtoDestaque.description }}</p>
+              <p class="ion-text-right"><strong>R$ {{ produtoDestaque.price | number:'1.2-2' }}</strong></p>
+            </ion-card-content>
+            <ion-button expand="block" fill="clear" (click)="goToDetalhes()">Ver Mais</ion-button>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-row class="ion-justify-content-center ion-padding-vertical">
+      <ion-col size="12" class="ion-text-center">
+        <p>Explore nossa seleção completa na aba "Produtos" ou cadastre novos itens na aba "Cadastro".</p>
+        <ion-button (click)="goToDetalhes()">Ver Todos os Produtos</ion-button>
+      </ion-col>
+    </ion-row>
+
+  </div>
 </ion-content>
