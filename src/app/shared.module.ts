@@ -1,25 +1,27 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Necessário para diretivas como ngIf, ngFor
-import { IonicModule } from '@ionic/angular'; // Se usar componentes Ionic nos itens compartilhados
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
 
-// Importe seus Pipes e Diretivas personalizados
 import { MaiusculaPipe } from './pipes/maiuscula.pipe';
+import { TituloPipe } from './pipes/titulo.pipe';
 import { DestaqueDirective } from './directives/destaque.directive';
 
 @NgModule({
   declarations: [
     MaiusculaPipe,
+    TituloPipe,
     DestaqueDirective
   ],
   imports: [
     CommonModule,
-    IonicModule // Importe se seus Pipes/Diretivas usarem componentes Ionic
+    IonicModule
   ],
-  exports: [ // <<--- MUITO IMPORTANTE: Exporte-os para que outros módulos possam usá-los
+  exports: [
     MaiusculaPipe,
+    TituloPipe,
     DestaqueDirective,
-    CommonModule, // Exporte CommonModule também para conveniência
-    IonicModule // Exporte IonicModule também para conveniência
+    CommonModule,
+    IonicModule
   ]
 })
 export class SharedModule { }

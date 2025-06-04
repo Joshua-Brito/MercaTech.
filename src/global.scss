@@ -10,3 +10,11 @@
 @import "@ionic/angular/css/flex-utils.css";
 @import "@ionic/angular/css/palettes/dark.system.css";
 
+body.dark ion-item,
+body.dark ion-list,
+body.dark ion-input,
+body.dark ion-card {
+  --background: #232323 !important;
+  background: #232323 !important;
+  color: #f4f4f4 !important;
+}

@@ -12,17 +12,12 @@ const routes: Routes = [
         loadChildren: () => import('../home/home.module').then(m => m.HomePageModule)
       },
       {
-        path: 'detalhes', // Este é o caminho para a aba "Produtos"
+        path: 'detalhes',
         loadChildren: () => import('../detalhes/detalhes.module').then(m => m.DetalhesPageModule)
       },
       {
-        path: 'cadastro', // Este é o caminho para a aba "Cadastro"
-        loadChildren: () => import('../cadastro/cadastro.module').then(m => m.CadastroPageModule)
-      },
-      // Rota para edição de produto (seja dentro de 'tabs' ou raiz)
-      {
-        path: 'cadastro/:id', // Adicione esta rota para permitir a edição
-        loadChildren: () => import('../cadastro/cadastro.module').then(m => m.CadastroPageModule)
+        path: 'carrinho',
+        loadChildren: () => import('../carrinho/carrinho.module').then(m => m.CarrinhoPageModule)
       },
       {
         path: '',
@@ -40,5 +35,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class TabsPageRoutingModule {}

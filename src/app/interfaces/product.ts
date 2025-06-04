@@ -1,6 +1,6 @@
 // src/app/interfaces/product.ts
 export interface Product {
-  id?: string;
+  id?: Number;
   title: string;
   description: string;
   price: number;

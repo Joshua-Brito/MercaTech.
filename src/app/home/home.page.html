@@ -1,47 +1,13 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Mercatech</ion-title>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>MercaTech</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Mercatech</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <ion-text>
-      <h1 class="ion-text-center">Bem-vindo(a) à Mercatech!</h1>
-      <p class="ion-text-center">Sua loja online favorita para os melhores produtos.</p>
-    </ion-text>
-
-    <ion-grid class="ion-padding-vertical">
-      <ion-row>
-        <ion-col size="12">
-          <ion-list>
-            <ion-item *ngFor="let produtoDestaque of featuredProducts | paginate: { itemsPerPage: 5, currentPage: paginaAtual }" appDestaque>
-              <ion-avatar slot="start">
-                <img [src]="produtoDestaque.image || 'https://via.placeholder.com/400x300?text=Sem+Imagem'" alt="Imagem do Produto">
-              </ion-avatar>
-              <ion-label>
-                <h2>{{ produtoDestaque.title | maiuscula }}</h2>
-                <p>{{ produtoDestaque.description }}</p>
-                <p><strong>Categoria:</strong> {{ produtoDestaque.category }}</p>
-                <p><strong>Preço:</strong> {{ produtoDestaque.price | currency:'BRL':'symbol':'1.2-2' }}</p>
-              </ion-label>
-            </ion-item>
-          </ion-list>
-          <pagination-controls (pageChange)="paginaAtual = $event"></pagination-controls>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <ion-button expand="block" color="primary" (click)="goToDetalhes()">
-      Ver todos os produtos
-    </ion-button>
+  <div id="container" class="ion-padding">
+    <h1>Bem-vindo(a) à Mercatech!</h1>
+    <p>Sua loja online favorita para os melhores produtos.</p>
+    <!-- Remova os botões daqui! -->
   </div>
 </ion-content>

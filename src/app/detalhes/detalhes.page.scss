@@ -9,13 +9,13 @@ ion-segment {
 }
 
 .produto-card {
-  width: 220px;
-  margin: 16px auto;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
   transition: box-shadow 0.2s;
   min-height: 370px;
   background: var(--ion-card-background);
@@ -23,14 +23,16 @@ ion-segment {
 
 .produto-card:hover {
   box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+  /* Remova o background daqui para o hover voltar ao normal */
 }
 
 .imagem-placeholder {
   width: 90%;
   height: 100px;
   background: #e0e0e0;
-  border-radius: 8px;
+  object-fit: contain;
   margin: 18px 0 10px 0;
+  border-radius: 8px;
 }
 
 ion-card-title {
@@ -38,20 +40,6 @@ ion-card-title {
   font-weight: 600;
   text-align: center;
   margin-bottom: 4px;
-}
-
-.avaliacao {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 6px;
-  font-size: 1.1rem;
-}
-
-.avaliacao-numero {
-  margin-left: 6px;
-  font-size: 0.95rem;
-  color: #555;
 }
 
 .descricao {

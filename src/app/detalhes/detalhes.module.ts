@@ -4,9 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { DetalhesPageRoutingModule } from './detalhes-routing.module';
 import { DetalhesPage } from './detalhes.page';
-
-// Importe o SharedModule aqui
-import { SharedModule } from '../shared.module'; // Verifique o caminho!
+import { SharedModule } from '../shared.module'; 
 
 @NgModule({
   imports: [
@@ -14,8 +12,7 @@ import { SharedModule } from '../shared.module'; // Verifique o caminho!
     FormsModule,
     IonicModule,
     DetalhesPageRoutingModule,
-    // Remova AppModule daqui!
-    SharedModule // <<--- IMPORTE O SharedModule aqui!
+    SharedModule 
   ],
   declarations: [DetalhesPage]
 })

@@ -2,7 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'maiuscula',
-  standalone: false
+  standalone:false
+  
+  
 })
 export class MaiusculaPipe implements PipeTransform {
 

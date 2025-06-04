@@ -1,34 +1,36 @@
 :root {
-  --ion-background-color: #ffffff;
-  --ion-text-color: #1e1e1e;
+  --ion-background-color: #f4f4f4;
+  --ion-text-color: #22223b;
   --ion-color-primary: #3b82f6;
-  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast: #fff;
   --ion-toolbar-background: #3b82f6;
-  --ion-toolbar-color: #ffffff;
-  --ion-item-background: #ffffff;
-  --ion-card-background: #f9f9f9;
+  --ion-toolbar-color: #fff;
+  --ion-item-background: #fff;
+  --ion-card-background: #fff;
 }
 
 body.dark {
-  --ion-background-color: #181818;
+  --ion-background-color: #181a1b;
   --ion-text-color: #f4f4f4;
-  --ion-color-primary: #22223b;
-  --ion-color-primary-contrast: #f4f4f4;
-  --ion-toolbar-background: #22223b;
+  --ion-color-primary: #3b82f6;
+  --ion-color-primary-contrast: #fff;
+  --ion-toolbar-background: #23272f;
   --ion-toolbar-color: #f4f4f4;
-  --ion-item-background: #232323;
-  --ion-card-background: #232323;
-  --ion-color-primary-shade: #ffffff;
-  --ion-color-primary-tint: #e0e0e0;
-  --ion-item-background-hover: #333333;
+  --ion-item-background: #23272f;
+  --ion-card-background: #23272f;
+  --ion-item-background-hover: #2c313a;
   --ion-tab-bar-color-selected: #fff;
-  --ion-tab-bar-background: #181818;
+  --ion-tab-bar-background: #181a1b;
+  --ion-input-background: #23272f;
+  --ion-list-background: #23272f;
 }
 
-body.dark ion-tab-button.tab-selected,
-body.dark ion-item:hover,
-body.dark ion-button:hover {
-  color: #fff !important;
+body.dark ion-button {
   --color: #fff !important;
-  background: #333 !important;
+}
+body.dark ion-input, 
+body.dark input, 
+body.dark textarea {
+  background: #23272f !important;
+  color: #f4f4f4 !important;
 }

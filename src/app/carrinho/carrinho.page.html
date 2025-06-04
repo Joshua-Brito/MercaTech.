@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Carrinho</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="carrinho.length; else vazio">
+    <ion-item *ngFor="let item of carrinho">
+      <ion-thumbnail slot="start">
+        <img [src]="item.image || 'https://via.placeholder.com/100x100?text=Sem+Imagem'">
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ item.title }}</h2>
+        <p>{{ item.category }}</p>
+        <p>R$ {{ item.price | number:'1.2-2' }}</p>
+      </ion-label>
+      <ion-button color="danger" fill="clear" slot="end" (click)="remover(item)">
+        Remover
+      </ion-button>
+    </ion-item>
+  </ion-list>
+  <ng-template #vazio>
+    <div class="vazio">
+      <ion-icon name="cart-outline" size="large"></ion-icon>
+      <p>Seu carrinho está vazio.</p>
+    </div>
+  </ng-template>
+  <div *ngIf="carrinho.length" class="total-footer">
+    <h2>Total: R$ {{ total | number:'1.2-2' }}</h2>
+    <ion-button expand="block" color="primary" (click)="finalizarCompra()">
+      Finalizar Compra
+    </ion-button>
+  </div>
+</ion-content>

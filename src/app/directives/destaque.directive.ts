@@ -1,8 +1,10 @@
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 
 @Directive({
-  selector: '[appDestaque]', 
-  standalone: false 
+  selector: '[appDestaque]',
+  standalone:false
+  
+  
 })
 export class DestaqueDirective {
 
