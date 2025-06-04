@@ -8,7 +8,7 @@ import { Observable } from 'rxjs'; // Necessário para Observables
 export class ApiService {
 
   // URL da API que será utilizada (Fake Store API)
-  private apiUrl = 'https://fakestoreapi.com/products';
+  private apiUrl = 'http://localhost:3000/produtos';
 
   constructor(private http: HttpClient) {
     // HttpClient é injetado aqui para fazer as requisições HTTP

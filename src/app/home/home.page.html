@@ -23,33 +23,25 @@
     <ion-grid class="ion-padding-vertical">
       <ion-row>
         <ion-col size="12">
-          <h2 class="ion-text-center ion-margin-bottom">Nossos Produtos em Destaque</h2>
-        </ion-col>
-      </ion-row>
-      <ion-row class="ion-justify-content-center">
-        <ion-col size="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let produtoDestaque of featuredProducts">
-          <ion-card>
-            <img [src]="produtoDestaque.image || 'https://via.placeholder.com/400x300?text=Sem+Imagem'" alt="Imagem do Produto">
-            <ion-card-header>
-              <ion-card-title>{{ produtoDestaque.title }}</ion-card-title>
-              <ion-card-subtitle>{{ produtoDestaque.category }}</ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content>
-              <p>{{ produtoDestaque.description }}</p>
-              <p class="ion-text-right"><strong>R$ {{ produtoDestaque.price | number:'1.2-2' }}</strong></p>
-            </ion-card-content>
-            <ion-button expand="block" fill="clear" (click)="goToDetalhes()">Ver Mais</ion-button>
-          </ion-card>
+          <ion-list>
+            <ion-item *ngFor="let produtoDestaque of featuredProducts | paginate: { itemsPerPage: 5, currentPage: paginaAtual }" appDestaque>
+              <ion-avatar slot="start">
+                <img [src]="produtoDestaque.image || 'https://via.placeholder.com/400x300?text=Sem+Imagem'" alt="Imagem do Produto">
+              </ion-avatar>
+              <ion-label>
+                <h2>{{ produtoDestaque.title | maiuscula }}</h2>
+                <p>{{ produtoDestaque.description }}</p>
+                <p><strong>Categoria:</strong> {{ produtoDestaque.category }}</p>
+                <p><strong>Preço:</strong> {{ produtoDestaque.price | currency:'BRL':'symbol':'1.2-2' }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+          <pagination-controls (pageChange)="paginaAtual = $event"></pagination-controls>
         </ion-col>
       </ion-row>
     </ion-grid>
-
-    <ion-row class="ion-justify-content-center ion-padding-vertical">
-      <ion-col size="12" class="ion-text-center">
-        <p>Explore nossa seleção completa na aba "Produtos" ou cadastre novos itens na aba "Cadastro".</p>
-        <ion-button (click)="goToDetalhes()">Ver Todos os Produtos</ion-button>
-      </ion-col>
-    </ion-row>
-
+    <ion-button expand="block" color="primary" (click)="goToDetalhes()">
+      Ver todos os produtos
+    </ion-button>
   </div>
 </ion-content>

@@ -1,4 +1,3 @@
-// src/app/cadastro/cadastro.page.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ItemService } from '../services/item.service';
@@ -10,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'app-cadastro',
   templateUrl: './cadastro.page.html',
   styleUrls: ['./cadastro.page.scss'],
-  standalone:false,
+  standalone: false,
 })
 export class CadastroPage implements OnInit {
   productForm!: FormGroup;
@@ -26,7 +25,7 @@ export class CadastroPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.initForm(); // Inicializa o formulário
+    this.initForm();
 
     this.activatedRoute.paramMap.subscribe(params => {
       this.productId = params.get('id');
@@ -36,7 +35,7 @@ export class CadastroPage implements OnInit {
       } else {
         this.isEditing = false;
         this.productForm.reset();
-        this.productForm.patchValue({ isFeatured: false }); // Garante valor inicial para o toggle
+        this.productForm.patchValue({ isFeatured: false });
       }
     });
   }
@@ -54,13 +53,16 @@ export class CadastroPage implements OnInit {
   }
 
   loadProductForEdit(id: string) {
-    const product = this.itemService.getItemById(id);
-    if (product) {
-      this.productForm.patchValue(product);
-    } else {
-      this.presentToast('Produto não encontrado para edição.', 'danger');
-      this.navController.navigateBack('/tabs/detalhes');
-    }
+    // Converta o id para número e use subscribe para pegar o produto do backend
+    this.itemService.getItemById(Number(id)).subscribe({
+      next: (product) => {
+        this.productForm.patchValue(product);
+      },
+      error: () => {
+        this.presentToast('Produto não encontrado para edição.', 'danger');
+        this.navController.navigateBack('/tabs/detalhes');
+      }
+    });
   }
 
   async onSubmit() {
@@ -68,20 +70,26 @@ export class CadastroPage implements OnInit {
       const product: Product = this.productForm.value;
 
       if (this.isEditing && product.id) {
-        this.itemService.updateItem(product);
-        await this.presentToast('Produto atualizado com sucesso!', 'success');
+        this.itemService.updateItem(product).subscribe(async () => {
+          await this.presentToast('Produto atualizado com sucesso!', 'success');
+          this.afterSave();
+        });
       } else {
-        this.itemService.addItem(product);
-        await this.presentToast('Produto cadastrado com sucesso!', 'success');
+        this.itemService.addItem(product).subscribe(async () => {
+          await this.presentToast('Produto cadastrado com sucesso!', 'success');
+          this.afterSave();
+        });
       }
-
-      this.productForm.reset();
-      this.isEditing = false; // Após cadastrar/atualizar, reseta para modo de novo cadastro
-      this.navController.navigateBack('/tabs/detalhes');
     } else {
       await this.presentToast('Por favor, preencha todos os campos obrigatórios e válidos.', 'warning');
       this.productForm.markAllAsTouched();
     }
+  }
+
+  afterSave() {
+    this.productForm.reset();
+    this.isEditing = false;
+    this.navController.navigateBack('/tabs/detalhes');
   }
 
   async presentToast(message: string, color: string) {
